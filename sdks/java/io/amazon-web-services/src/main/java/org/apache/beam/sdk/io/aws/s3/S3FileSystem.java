@@ -466,6 +466,7 @@ class S3FileSystem extends FileSystem<S3ResourceId> {
     copyObjectRequest.setStorageClass(options.getS3StorageClass());
     copyObjectRequest.setSourceSSECustomerKey(options.getSSECustomerKey());
     copyObjectRequest.setDestinationSSECustomerKey(options.getSSECustomerKey());
+    copyObjectRequest.setBucketKeyEnabled(true);
     return amazonS3.get().copyObject(copyObjectRequest);
   }
 
@@ -476,7 +477,8 @@ class S3FileSystem extends FileSystem<S3ResourceId> {
     InitiateMultipartUploadRequest initiateUploadRequest =
         new InitiateMultipartUploadRequest(destinationPath.getBucket(), destinationPath.getKey())
             .withStorageClass(options.getS3StorageClass())
-            .withObjectMetadata(sourceObjectMetadata);
+            .withObjectMetadata(sourceObjectMetadata)
+            .withBucketKeyEnabled(true);
     initiateUploadRequest.setSSECustomerKey(options.getSSECustomerKey());
 
     InitiateMultipartUploadResult initiateUploadResult =

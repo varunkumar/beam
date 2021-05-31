@@ -90,7 +90,8 @@ class S3WritableByteChannel implements WritableByteChannel {
     InitiateMultipartUploadRequest request =
         new InitiateMultipartUploadRequest(path.getBucket(), path.getKey())
             .withStorageClass(options.getS3StorageClass())
-            .withObjectMetadata(objectMetadata);
+            .withObjectMetadata(objectMetadata)
+            .withBucketKeyEnabled(true);
     request.setSSECustomerKey(options.getSSECustomerKey());
     request.setSSEAwsKeyManagementParams(options.getSSEAwsKeyManagementParams());
     InitiateMultipartUploadResult result;
